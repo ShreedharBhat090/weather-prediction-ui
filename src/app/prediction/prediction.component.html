@@ -1,0 +1,60 @@
+<section class="section">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <h4>Select a city to know the weather</h4>
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <mat-select [(ngModel)]="selectedCity" name="city" (ngModelChange)="onCityChange($event)">
+            <mat-option *ngFor="let city of cities" [value]="city.name">
+              {{city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </mat-form-field>
+
+  </form>
+  <mat-grid-list cols="9" rowHeight="1:2">
+    <div *ngFor="let today of weatherToday;let i = index">
+      <mat-grid-tile *ngIf="i==0">
+        <h4>{{today.dt_txt.split(" ")[0]}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="card-size">
+          <mat-card-header>
+            <mat-card-title>{{today.dt_txt.split(" ")[1]}}</mat-card-title>
+            <mat-card-subtitle>{{today.comment}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-sm-image [src]="today.weather[0].icon" alt="Image of weather condition">
+          <mat-card-content>
+            <p><strong>Temp:</strong> {{today.main.temp}}°C</p>
+            <p><strong>Feels like:</strong> {{today.main.feels_like}}°C</p>
+            <p><strong>Humidity:</strong> {{today.main.humidity}}</p>
+            <p><strong>Wind speed:</strong> {{today.wind.speed}}m/s</p>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+  <mat-grid-list cols="9" rowHeight="1:2">
+    <div *ngFor="let nextDay of weatherNextTwoDays;let i = index">
+      <mat-grid-tile *ngIf="i  % 8 == 0">
+        <h4>{{nextDay.dt_txt.split(" ")[0]}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="card-size">
+          <mat-card-header>
+            <mat-card-title>{{nextDay.dt_txt.split(" ")[1]}}</mat-card-title>
+            <mat-card-subtitle>{{nextDay.comment}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-sm-image [src]="nextDay.weather[0].icon" alt="Image of weather condition">
+          <mat-card-content>
+            <p><strong>Temp:</strong> {{nextDay.main.temp}}°C</p>
+            <p><strong>Feels like:</strong> {{nextDay.main.feels_like}}°C</p>
+            <p><strong>Humidity:</strong> {{nextDay.main.humidity}}</p>
+            <p><strong>Wind speed:</strong> {{nextDay.wind.speed}}m/s</p>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</section>
